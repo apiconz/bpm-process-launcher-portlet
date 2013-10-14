@@ -7,17 +7,16 @@
 <%@ page import="javax.portlet.*"%>
 <portlet:defineObjects />
 <style>
-<!--
-.profile li {
-	float: right;
-	clear: right;
+.processP {
+	font: normal 12px/150% Arial, Helvetica, sans-serif;
+	width: 100%;
+	height: 100%
 }
--->
 </style>
 <script>
-function receiveFromCoach(aString) {
-    alert(aString);
-}
+	function receiveFromCoach(aString) {
+		alert(aString);
+	}
 </script>
 <%
 	List processList = (List) renderRequest.getPortletSession()
@@ -26,49 +25,36 @@ function receiveFromCoach(aString) {
 	//Portlet namespace
 	String portletNS = renderResponse.getNamespace();
 %>
-<h1>Inicial</h1>
+<div class="processP">
+	<h1>Procesos Participantes</h1>
 
-<%
-	if (processList == null) {
-%>
-<p>nooooooooooo vinieron procesos</p>
-<%
-	} else {
-%>
+	<%
+		if (processList == null) {
+	%>
+	<p>No Existen Procesos a Iniciar</p>
+	<%
+		} else {
+	%>
 
-<table border="1">
-	<thead>
-		<tr>
-			<th>Nombre</th>
-		</tr>
-	</thead>
-	<tbody>
 
+	<ul>
 		<%
 			for (int i = 0; i < processList.size(); i++) {
-				ExposedItem item = (ExposedItem) processList.get(i);
+					ExposedItem item = (ExposedItem) processList.get(i);
 		%>
-		<tr>
-			<td><portlet:actionURL var="actionURL">
-					<portlet:param name="javax.portlet.action" value="startProcess" />
-					<portlet:param name="itemID" value="<%=item.getItemID()%>" />
-					<portlet:param name="processAppID" value="<%=item.getProcessAppID()%>" />
-				</portlet:actionURL> <a href="http://wp8.onp.gob.pe<%=item.getStartURL()%>"><%=item.getDisplay()%></a></td>
-		</tr>
+		<li><portlet:actionURL var="actionURL">
+				<portlet:param name="javax.portlet.action" value="startProcess" />
+				<portlet:param name="itemID" value="<%=item.getItemID()%>" />
+				<portlet:param name="processAppID"
+					value="<%=item.getProcessAppID()%>" />
+			</portlet:actionURL> <a href="<%=actionURL%>"><%=item.getDisplay()%></a></li>
 
 		<%
 			}
 		%>
-
-	</tbody>
-</table>
+	</ul>
+</div>
 
 <%
 	}
 %>
-
-
-<portlet:renderURL var="renderURL" />
-
-<a href="<%=renderURL%>">Render URL</a>
-<br />

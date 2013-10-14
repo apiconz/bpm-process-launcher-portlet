@@ -33,6 +33,11 @@ public class ServiceRESTClient2 {
 		client = new BPMClientImpl(hostname, port, handler);
 	}
 
+	public void startProcess(String bpdId, String processAppId) throws BPMClientException, AuthenticationTokenHandlerException  {
+		JSONObject resultado =  client.runBPD(bpdId, processAppId, null);
+		System.out.println("" + resultado.toString());
+	}
+	
 	public List<ExposedItem> obtenerListaDeProcesos() throws BPMClientException,
 			AuthenticationTokenHandlerException, JSONException {
 		System.out.println("--> obtenerListaDeProcesos");
@@ -52,7 +57,7 @@ public class ServiceRESTClient2 {
 			item.setItemID(exposedItem.getString("itemID"));
 			item.setItemReference(exposedItem.getString("itemReference"));
 			item.setProcessAppID(exposedItem.getString("processAppID"));
-//			item.setSnapshotID(exposedItem.getString("snapshotID"));
+			item.setSnapshotID(exposedItem.getString("snapshotID"));
 //			item.setSnapshotName(exposedItem.getString("snapshotName"));
 //			item.setSnapshotCreatedOn(exposedItem.getString("snapshotCreatedOn"));
 //			System.out.println(":::" + exposedItem.getString("snapshotCreatedOn"));
